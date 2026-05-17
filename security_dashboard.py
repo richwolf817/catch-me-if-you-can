@@ -25,6 +25,9 @@ SERVICES = {
     "kTCCServiceScreenCapture": "Screen Access",
     "kTCCServiceListenEvent": "Input Monitoring",
     "kTCCServiceAccessibility": "Accessibility",
+    "kTCCServiceMicrophone": "Microphone",
+    "kTCCServiceCamera": "Camera",
+    "kTCCServiceSystemPolicyAllFiles": "Full Disk Access",
 }
 
 SUSPICIOUS = [
@@ -34,6 +37,8 @@ SUSPICIOUS = [
     "anydesk",
     "rustdesk",
     "screenconnect",
+    "logmein",
+    "vnc",
 ]
 
 BG = "#0f172a"
@@ -49,14 +54,16 @@ class Card(QFrame):
 
         self.setStyleSheet(f"""
             background-color: {CARD};
-            border-radius: 16px;
-            padding: 10px;
+            border-radius: 18px;
+            padding: 14px;
         """)
 
         layout = QVBoxLayout()
 
         self.title = QLabel(title)
-        self.title.setStyleSheet("color: white; font-size: 16px;")
+        self.title.setStyleSheet(
+            "color: white; font-size: 16px; font-weight: bold;"
+        )
 
         self.status = QLabel("OK")
         self.status.setStyleSheet(
@@ -80,7 +87,7 @@ class Dashboard(QWidget):
         super().__init__()
 
         self.setWindowTitle("Security Dashboard")
-        self.setGeometry(100, 100, 1200, 800)
+        self.setGeometry(100, 100, 1280, 860)
 
         self.setStyleSheet(f"""
             background-color: {BG};
@@ -88,7 +95,7 @@ class Dashboard(QWidget):
 
         main = QVBoxLayout()
 
-        title = QLabel("Security Dashboard")
+        title = QLabel("🛡 macOS Security Dashboard")
         title.setStyleSheet(
             "color: white; font-size: 30px; font-weight: bold;"
         )
@@ -103,12 +110,21 @@ class Dashboard(QWidget):
             "Screen Access",
             "Input Monitoring",
             "Accessibility",
+            "Microphone",
+            "Camera",
+            "Full Disk Access",
         ]
 
         for i, name in enumerate(names):
+
+            row = i // 3
+            col = i % 3
+
             card = Card(name)
+
             self.cards[name] = card
-            grid.addWidget(card, 0, i)
+
+            grid.addWidget(card, row, col)
 
         main.addLayout(grid)
 
@@ -118,8 +134,8 @@ class Dashboard(QWidget):
         self.log.setStyleSheet(f"""
             background-color: {CARD};
             color: {TEXT};
-            border-radius: 16px;
-            padding: 10px;
+            border-radius: 18px;
+            padding: 12px;
             font-size: 13px;
         """)
 
@@ -203,7 +219,7 @@ class Dashboard(QWidget):
                 )
 
                 card.detail.setText(
-                    ", ".join(permissions[name])[:60]
+                    ", ".join(permissions[name])[:80]
                 )
 
             else:

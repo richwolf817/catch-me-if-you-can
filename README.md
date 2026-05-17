@@ -1,21 +1,90 @@
-# macOS Security Monitor
+# macOS Security Dashboard
 
-## Install dependency
+A real-time macOS monitoring dashboard that watches for:
 
-pip3 install psutil
+- Screen Recording access
+- Input Monitoring access
+- Accessibility access
+- Microphone access
+- Camera access
+- Full Disk Access
+- Suspicious processes
+- Remote control tools
+- Keylogger-like behavior
 
-## Run
+Built with:
+- Python
+- PyQt6
+- psutil
+- sqlite3
 
-python3 security_monitor.py
+---
 
-## Notes
+# Features
 
-- Grant Terminal Full Disk Access in:
-  System Settings -> Privacy & Security -> Full Disk Access
+- Live security dashboard
+- Dark mode UI
+- Red/green security cards
+- Real-time refresh
+- Detection log
+- Suspicious process detection
+- TCC privacy monitoring
 
-- The monitor checks:
-  - Screen recording permissions
-  - Input monitoring permissions
-  - Accessibility permissions
-  - Listening ports
-  - Suspicious process names
+---
+
+# Setup
+
+## 1. Create venv
+
+```bash
+python3 -m venv .venv
+```
+
+## 2. Activate venv
+
+```bash
+source .venv/bin/activate
+```
+
+## 3. Install dependencies
+
+```bash
+python3 -m pip install -r requirements.txt
+```
+
+---
+
+# Run
+
+```bash
+python3 security_dashboard.py
+```
+
+---
+
+# Recommended macOS Settings
+
+Enable Full Disk Access for:
+- Terminal
+- iTerm
+- VSCode
+
+Path:
+System Settings → Privacy & Security → Full Disk Access
+
+---
+
+# Optional
+
+Install suspicious tools to test detections:
+- nc
+- rustdesk
+- teamviewer
+
+The dashboard will flag them.
+
+---
+
+# Disclaimer
+
+This is a lightweight monitoring dashboard and not a full antivirus or EDR platform.
